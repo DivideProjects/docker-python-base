@@ -33,11 +33,10 @@ jobs:
         run: |
           IMG="docker-python-base"
           OWNER="$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')"
-          GIT_SHA=$(echo ${{ github.sha }} | cut -c1-7)
-          echo "GIT_SHA=$GIT_SHA" >> $GITHUB_ENV
-          echo "BUILD_VER=debian-11-slim-$GIT_SHA" >> $GITHUB_ENV
+          echo "BUILD_VER=debian-11-slim" >> $GITHUB_ENV
           echo "IMG=${IMG}" >> $GITHUB_ENV
           echo "IMAGE=${OWNER}/${IMG}" >> $GITHUB_ENV
+          echo "GIT_SHA=$$(echo ${{ github.sha }} | cut -c1-7)" >> $GITHUB_ENV
           echo "BUILD_DATE=$(date +'%Y-%m-%d %H:%M:%S')" >> $GITHUB_ENV
           echo "GIT_REF=$(git symbolic-ref -q --short HEAD || git describe --tags --exact-match)" >> $GITHUB_ENV
 
