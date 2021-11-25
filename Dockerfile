@@ -7,6 +7,8 @@ RUN apt-get update \
     gcc \
     libpython3-dev \
     g++ \
+    wget \
+    curl \
     && python3 -m venv /venv \
     && /venv/bin/pip install --upgrade pip setuptools wheel poetry==1.1.11 \
     && apt-get clean \
