@@ -16,6 +16,8 @@ RUN apt-get update \
     unzip \
     zip \
     && python3 -m venv /venv \
-    && /venv/bin/pip install --upgrade pip setuptools wheel poetry==1.1.11 \
+    && /venv/bin/pip install --no-cache-dir --upgrade pip setuptools wheel poetry==1.1.11 \
     && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+    && apt-get autoremove --purge \
+    && rm -rf /var/lib/apt/lists/* /root/* /tmp/* /var/cache/apt/archives/*.deb
+
