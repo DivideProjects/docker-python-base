@@ -1,5 +1,6 @@
 FROM debian:11-slim
-
+ENV DEBIAN_FRONTEND noninteractive
+ENV TZ UTC
 RUN apt-get update \
     && apt-get upgrade --yes \
     && apt-get install --no-install-suggests --no-install-recommends --yes \
