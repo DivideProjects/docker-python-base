@@ -19,7 +19,7 @@ RUN apt-get update \
     ca-certificates \
     gnupg \
     && curl -sLf --retry 3 --tlsv1.2 --proto "=https" 'https://packages.doppler.com/public/cli/gpg.DE2A7741A397C129.key' | apt-key add - \
-    echo "deb https://packages.doppler.com/public/cli/deb/debian any-version main" | tee /etc/apt/sources.list.d/doppler-cli.list \
+    && echo "deb https://packages.doppler.com/public/cli/deb/debian any-version main" | tee /etc/apt/sources.list.d/doppler-cli.list \
     && python3 -m venv /venv \
     && /venv/bin/pip install --no-cache-dir --upgrade pip setuptools wheel poetry==1.1.11 \
     && apt-get clean \
