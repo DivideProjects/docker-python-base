@@ -4,6 +4,8 @@
   <a href="https://github.com/DivideProjects/docker-python-base/actions/workflows/docker-build.yml"><img src="https://github.com/DivideProjects/docker-python-base/actions/workflows/docker-build.yml/badge.svg" alt="Docker Build"></a>
 </p>
 
-This is a base image used by [@DivideProjects](https://github.com/DivideProjects) in their python-based services.
+This is a base image used by us for our python-based services.
 
-This image is only available via GitHub Container Registry.
+It is lightweight and minimal, enhancing speed and security.
+
+This image is available on GitHub Container Registry and [Docker Hub](https://hub.docker.com/r/divideprojects/docker-python-base).

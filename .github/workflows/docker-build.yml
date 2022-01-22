@@ -31,6 +31,12 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
       - name: Set ENV Variables
         run: |
           IMG="$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')"
@@ -58,6 +64,8 @@ jobs:
           tags: |
             ghcr.io/${{ env.IMAGE }}:latest
             ghcr.io/${{ env.IMAGE }}:${{ env.BUILD_VER }}
+            ${{ env.IMAGE }}:latest
+            ${{ env.IMAGE }}:${{ env.BUILD_VER }}
           labels: |
             org.opencontainers.image.authors=${{ github.repository_owner }}
             org.opencontainers.image.created=${{ env.BUILD_DATE }}
