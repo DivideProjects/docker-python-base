@@ -1,5 +1,6 @@
 FROM debian:11-slim
 ENV DEBIAN_FRONTEND noninteractive
+ENV PY_VERSION 3.10.4
 ENV TZ UTC
 RUN apt-get update \
     && apt-get upgrade --yes \
@@ -20,16 +21,16 @@ RUN apt-get update \
     zlib1g-dev \
     libssl-dev \
     && cd ~ \
-    && wget https://www.python.org/ftp/python/3.10.4/Python-3.10.4.tgz \
-    && tar -xvf Python-3.10.4.tgz \
-    && cd Python-3.10.4 \
+    && wget https://www.python.org/ftp/python/${PY_VERSION}/Python-${PY_VERSION}.tgz \
+    && tar -xvf Python-${PY_VERSION}.tgz \
+    && cd Python-${PY_VERSION} \
     && ./configure --prefix=/usr/local --enable-optimizations \
     && make -j $(nproc) \
     && make install \
     && ln -s /usr/local/bin/python3 /usr/local/bin/python \
     && ln -s /usr/local/bin/pip3 /usr/local/bin/pip \
     && cd .. \
-    && rm -rf Python-3.* \
+    && rm -rf Python-{$PY_VERSION} \
     && curl -sLf --retry 3 --tlsv1.2 --proto "=https" 'https://packages.doppler.com/public/cli/gpg.DE2A7741A397C129.key' | apt-key add - \
     && echo "deb https://packages.doppler.com/public/cli/deb/debian any-version main" | tee /etc/apt/sources.list.d/doppler-cli.list \
     && python3 -m venv /venv \
