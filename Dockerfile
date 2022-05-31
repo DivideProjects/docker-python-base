@@ -19,14 +19,6 @@ RUN apt-get update \
     gnupg \
     zlib1g-dev \
     libssl-dev \
-    build-essential \
-    libbz2-dev \
-    libreadline-dev \
-    libsqlite3-dev \
-    llvm \
-    libncurses5-dev \
-    libncursesw5-dev \
-    tk-dev \
     && cd ~ \
     && wget https://www.python.org/ftp/python/3.10.4/Python-3.10.4.tgz \
     && tar -xvf Python-3.10.4.tgz \
@@ -43,5 +35,5 @@ RUN apt-get update \
     && python3 -m venv /venv \
     && /venv/bin/pip install --no-cache-dir --upgrade pip setuptools wheel poetry \
     && apt-get clean \
-    && apt-get autoremove --purge \
+    && apt-get autoremove --purge --yes \
     && rm -rf /var/lib/apt/lists/* /root/* /tmp/* /var/cache/apt/archives/*.deb
