@@ -40,7 +40,7 @@ jobs:
       - name: Set ENV Variables
         run: |
           IMG="$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')"
-          echo "BUILD_VER=$(cat Dockerfile | grep 'ENV PY_VERSION' | cut -d " " -f 3)" >> $GITHUB_ENV
+          echo "BUILD_VER=$(cat Dockerfile | grep 'FROM python:' | cut -d ":" -f 2 | cut -d "-" -f 1)" >> $GITHUB_ENV
           echo "IMAGE=${IMG}" >> $GITHUB_ENV
           echo "GIT_SHA=$$(echo ${{ github.sha }} | cut -c1-7)" >> $GITHUB_ENV
           echo "BUILD_DATE=$(date +'%Y-%m-%d %H:%M:%S')" >> $GITHUB_ENV
