@@ -23,6 +23,5 @@ jobs:
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
 
   automerge-dependabot-pr:
-    if: github.actor == 'dependabot[bot]' && github.event_name == 'pull_request'
     needs: build-docker
     uses: divkix/reusable-workflows/.github/workflows/automerge-dependabot-pr.yml@main
