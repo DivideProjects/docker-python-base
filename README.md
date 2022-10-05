@@ -1,7 +1,7 @@
 # docker-python-base
 
 <p align="center">
-  <a href="https://github.com/DivideProjects/docker-python-base/actions/workflows/docker-build.yml"><img src="https://github.com/DivideProjects/docker-python-base/actions/workflows/docker-build.yml/badge.svg" alt="Docker Build"></a>
+  <a href="https://github.com/DivideProjects/docker-python-base/actions/workflows/ci.yml"><img src="https://github.com/DivideProjects/docker-python-base/actions/workflows/ci.yml/badge.svg" alt="Docker Build"></a>
 </p>
 
 This is a base image used by us for our python-based services.
