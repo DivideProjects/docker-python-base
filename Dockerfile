@@ -6,6 +6,10 @@ RUN apt-get update \
     && apt-get upgrade --yes \
     && apt-get install --no-install-suggests --no-install-recommends --yes \
     poppler-utils \
+    apt-utils \
+    build-essential \
+    libpq-dev \
+    python3-dev \
     gcc \
     g++ \
     wget \
