@@ -21,6 +21,7 @@ jobs:
         include:
           - dockerfile: ./Dockerfile
             tag: py311
+            latest_image: true
           - dockerfile: ./Dockerfile.py310
             tag: py310
             latest_image: false
