@@ -15,9 +15,19 @@ jobs:
 
   build-docker:
     needs: get-repo-info
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - dockerfile: ./Dockerfile
+            tag: latest
+          - dockerfile: ./Dockerfile.py310
+            tag: py310
     uses: divkix/reusable-workflows/.github/workflows/docker-build-publish.yml@main
     with:
       repo_name: ${{ needs.get-repo-info.outputs.repo_name }}
+      dockerfile: ${{ matrix.dockerfile }}
+      tag: ${{ matrix.tag }}
     secrets:
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
       DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
