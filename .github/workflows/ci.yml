@@ -20,14 +20,19 @@ jobs:
       matrix:
         include:
           - dockerfile: ./Dockerfile
-            tag: latest
+            tag: py311
           - dockerfile: ./Dockerfile.py310
             tag: py310
+            latest_image: false
+          - dockerfile: ./Dockerfile.py39
+            tag: py39
+            latest_image: false
     uses: divkix/reusable-workflows/.github/workflows/docker-build-publish.yml@main
     with:
       repo_name: ${{ needs.get-repo-info.outputs.repo_name }}
       dockerfile: ${{ matrix.dockerfile }}
       tag: ${{ matrix.tag }}
+      latest_image: ${{ matrix.latest_image }}
     secrets:
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
       DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
