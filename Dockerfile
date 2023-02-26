@@ -10,6 +10,7 @@ RUN apt-get update \
     build-essential \
     libpq-dev \
     python3-dev \
+    python3-lxml \
     gcc \
     g++ \
     wget \
