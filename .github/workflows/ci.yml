@@ -19,6 +19,9 @@ jobs:
       fail-fast: false
       matrix:
         include:
+          - dockerfile: ./py312-rc.Dockerfile
+            tag: py312
+            latest_image: false
           - dockerfile: ./Dockerfile
             tag: py311
             latest_image: true
