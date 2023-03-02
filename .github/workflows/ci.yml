@@ -22,10 +22,10 @@ jobs:
           - dockerfile: ./Dockerfile
             tag: py311
             latest_image: true
-          - dockerfile: ./Dockerfile.py310
+          - dockerfile: ./py310.Dockerfile
             tag: py310
             latest_image: false
-          - dockerfile: ./Dockerfile.py39
+          - dockerfile: ./py39.Dockerfile
             tag: py39
             latest_image: false
     uses: divkix/reusable-workflows/.github/workflows/docker-build-publish.yml@main
