@@ -45,6 +45,7 @@ jobs:
 
       - name: Set ENV Variables
         run: |
+          repo_name_lowercase = ${{ github.repository }} | tr '[:upper:]' '[:lower:]'
           echo "BUILD_VER=$(cat ${{ matrix.dockerfile }} | grep 'FROM python:' | cut -d ":" -f 2 | cut -d "-" -f 1)" >> $GITHUB_ENV
           echo "GIT_SHA=$$(echo ${{ github.sha }} | cut -c1-7)" >> $GITHUB_ENV
           echo "BUILD_DATE=$(date +'%Y-%m-%d %H:%M:%S')" >> $GITHUB_ENV
@@ -55,17 +56,17 @@ jobs:
 
           # if latest_image is true, add latest tag to docker.io
           if [ "${{ matrix.latest_image }}" = "true" ]; then
-            TAGS+="docker.io/divkix/docker-python-base:latest,"
+            TAGS+="docker.io/$repo_name_lowercase:latest,"
           fi
 
           # if latest_image is true, add latest tag to ghcr.io
           if [ "${{ matrix.latest_image }}" = "true" ]; then
-            TAGS+="ghcr.io/divkix/docker-python-base:latest,"
+            TAGS+="ghcr.io/$repo_name_lowercase:latest,"
           fi
 
           # if tag is set, add tag
-          TAGS+="docker.io/divkix/docker-python-base:${{ matrix.tag }},"
-          TAGS+="ghcr.io/divkix/docker-python-base:${{ matrix.tag }},"
+          TAGS+="docker.io/$repo_name_lowercase:${{ matrix.tag }},"
+          TAGS+="ghcr.io/$repo_name_lowercase:${{ matrix.tag }},"
 
           # trim the last comma and set the env var
           echo "TAGS=${TAGS::${#TAGS}-1}" >> $GITHUB_ENV
