@@ -10,11 +10,7 @@ on:
   pull_request:
 
 jobs:
-  get-repo-info:
-    uses: divkix/reusable-workflows/.github/workflows/get-repo-info.yml@main
-
   build-docker:
-    needs: get-repo-info
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -49,12 +45,30 @@ jobs:
 
       - name: Set ENV Variables
         run: |
-          IMG="$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')"
-          echo "BUILD_VER=$(cat Dockerfile | grep 'FROM python:' | cut -d ":" -f 2 | cut -d "-" -f 1)" >> $GITHUB_ENV
-          echo "IMAGE=${IMG}" >> $GITHUB_ENV
+          echo "BUILD_VER=$(cat ${{ matrix.dockerfile }} | grep 'FROM python:' | cut -d ":" -f 2 | cut -d "-" -f 1)" >> $GITHUB_ENV
           echo "GIT_SHA=$$(echo ${{ github.sha }} | cut -c1-7)" >> $GITHUB_ENV
           echo "BUILD_DATE=$(date +'%Y-%m-%d %H:%M:%S')" >> $GITHUB_ENV
           echo "GIT_REF=$(git symbolic-ref -q --short HEAD || git describe --tags --exact-match)" >> $GITHUB_ENV
+
+          # Generate Tag Env Vars
+          TAGS=""
+
+          # if latest_image is true, add latest tag to docker.io
+          if [ "${{ matrix.latest_image }}" = "true" ]; then
+            TAGS+="docker.io/divkix/docker-python-base:latest,"
+          fi
+
+          # if latest_image is true, add latest tag to ghcr.io
+          if [ "${{ matrix.latest_image }}" = "true" ]; then
+            TAGS+="ghcr.io/divkix/docker-python-base:latest,"
+          fi
+
+          # if tag is set, add tag
+          TAGS+="docker.io/divkix/docker-python-base:${{ inputs.tag }},"
+          TAGS+="ghcr.io/divkix/docker-python-base:${{ inputs.tag }},"
+
+          # trim the last comma and set the env var
+          echo "TAGS=${TAGS::${#TAGS}-1}" >> $GITHUB_ENV
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
@@ -72,11 +86,7 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          tags: |
-            ghcr.io/${{ env.IMAGE }}:latest
-            ghcr.io/${{ env.IMAGE }}:${{ env.BUILD_VER }}
-            ${{ env.IMAGE }}:latest
-            ${{ env.IMAGE }}:${{ env.BUILD_VER }}
+          tags: ${{ env.TAGS }}
           labels: |
             org.opencontainers.image.authors=${{ github.repository_owner }}
             org.opencontainers.image.created=${{ env.BUILD_DATE }}
