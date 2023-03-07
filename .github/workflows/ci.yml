@@ -45,7 +45,7 @@ jobs:
 
       - name: Set ENV Variables
         run: |
-          repo_name_lowercase = ${{ github.repository }} | tr '[:upper:]' '[:lower:]'
+          repo_name_lowercase=${{ github.repository }} | tr '[:upper:]' '[:lower:]'
           echo "BUILD_VER=$(cat ${{ matrix.dockerfile }} | grep 'FROM python:' | cut -d ":" -f 2 | cut -d "-" -f 1)" >> $GITHUB_ENV
           echo "GIT_SHA=$$(echo ${{ github.sha }} | cut -c1-7)" >> $GITHUB_ENV
           echo "BUILD_DATE=$(date +'%Y-%m-%d %H:%M:%S')" >> $GITHUB_ENV
@@ -54,13 +54,9 @@ jobs:
           # Generate Tag Env Vars
           TAGS=""
 
-          # if latest_image is true, add latest tag to docker.io
+          # if latest_image is true, add latest tag to docker.io and ghcr.io
           if [ "${{ matrix.latest_image }}" = "true" ]; then
             TAGS+="docker.io/$repo_name_lowercase:latest,"
-          fi
-
-          # if latest_image is true, add latest tag to ghcr.io
-          if [ "${{ matrix.latest_image }}" = "true" ]; then
             TAGS+="ghcr.io/$repo_name_lowercase:latest,"
           fi
 
