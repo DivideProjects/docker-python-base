@@ -64,8 +64,8 @@ jobs:
           fi
 
           # if tag is set, add tag
-          TAGS+="docker.io/divkix/docker-python-base:${{ inputs.tag }},"
-          TAGS+="ghcr.io/divkix/docker-python-base:${{ inputs.tag }},"
+          TAGS+="docker.io/divkix/docker-python-base:${{ matrix.tag }},"
+          TAGS+="ghcr.io/divkix/docker-python-base:${{ matrix.tag }},"
 
           # trim the last comma and set the env var
           echo "TAGS=${TAGS::${#TAGS}-1}" >> $GITHUB_ENV
