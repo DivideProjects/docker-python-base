@@ -25,9 +25,11 @@ jobs:
           - dockerfile: ./py310.Dockerfile
             tag: py310
             latest_image: false
+            update_description: false
           - dockerfile: ./py39.Dockerfile
             tag: py39
             latest_image: false
+            update_description: false
     uses: divkix/reusable-workflows/.github/workflows/docker-build-publish.yml@main
     with:
       repo_name: ${{ needs.get-repo-info.outputs.repo_name }}
