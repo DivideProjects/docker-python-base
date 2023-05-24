@@ -19,21 +19,21 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - dockerfile: ./Dockerfile
+          - base-image: python:3.11-slim
             tag: py311
             latest_image: true
-          - dockerfile: ./py310.Dockerfile
+          - base-image: python:3.10-slim
             tag: py310
             latest_image: false
-            update_description: false
-          - dockerfile: ./py39.Dockerfile
+          - base-image: python:3.9-slim
             tag: py39
             latest_image: false
-            update_description: false
+
     uses: divkix/reusable-workflows/.github/workflows/docker-build-publish.yml@main
     with:
       repo_name: ${{ needs.get-repo-info.outputs.repo_name }}
-      dockerfile: ${{ matrix.dockerfile }}
+      dockerfile: ./tools/docker/Dockerfile
+      build_args: BASE_IMAGE=${{ matrix.base-image }}
       tag: ${{ matrix.tag }}
       latest_image: ${{ matrix.latest_image }}
     secrets:

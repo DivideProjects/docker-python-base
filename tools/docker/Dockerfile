@@ -1,4 +1,5 @@
-FROM python:3.11-slim
+ARG BASE_IMAGE
+FROM ${BASE_IMAGE}
 ENV DEBIAN_FRONTEND noninteractive
 ENV TZ UTC
 COPY setup /tmp/setup
@@ -25,7 +26,14 @@ RUN apt-get update \
     ca-certificates \
     gnupg \
     && pip install --no-cache-dir --upgrade pip setuptools wheel poetry \
+    && poetry config virtualenvs.create false \
     && apt-get clean \
     && apt-get autoremove --purge --yes \
     && /tmp/setup/ffmpeg-setup.sh \
     && rm -rf /var/lib/apt/lists/* /root/* /tmp/* /var/cache/apt/archives/*.deb setup
+LABEL org.opencontainers.image.authors="Divanshu Chauhan <me@divkix.me>"
+LABEL org.opencontainers.image.url="https://divkix.me"
+LABEL org.opencontainers.image.source="https://github.com/Divkix/docker-python-base"
+LABEL org.opencontainers.image.title="docker-python-base"
+LABEL org.opencontainers.image.description="Base python 🐍 image for building python applications 📲"
+LABEL org.opencontainers.image.vendor="Divkix"
