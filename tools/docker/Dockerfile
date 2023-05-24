@@ -2,7 +2,7 @@ ARG BASE_IMAGE
 FROM ${BASE_IMAGE}
 ENV DEBIAN_FRONTEND noninteractive
 ENV TZ UTC
-COPY setup /tmp/setup
+COPY tools/docker/setup /tmp/setup
 RUN apt-get update \
     && apt-get upgrade --yes \
     && apt-get install --no-install-suggests --no-install-recommends --yes \
@@ -30,7 +30,7 @@ RUN apt-get update \
     && apt-get clean \
     && apt-get autoremove --purge --yes \
     && /tmp/setup/ffmpeg-setup.sh \
-    && rm -rf /var/lib/apt/lists/* /root/* /tmp/* /var/cache/apt/archives/*.deb setup
+    && rm -rf /var/lib/apt/lists/* /root/* /tmp/* /var/cache/apt/archives/*.deb /tmp
 LABEL org.opencontainers.image.authors="Divanshu Chauhan <me@divkix.me>"
 LABEL org.opencontainers.image.url="https://divkix.me"
 LABEL org.opencontainers.image.source="https://github.com/Divkix/docker-python-base"
