@@ -31,7 +31,7 @@ RUN apt-get update \
     && apt-get autoremove --purge --yes \
     && /tmp/setup/ffmpeg-setup.sh \
     && rm -rf /var/lib/apt/lists/* /root/* /tmp/* /var/cache/apt/archives/*.deb /tmp
-LABEL org.opencontainers.image.authors="Divanshu Chauhan <me@divkix.me>"
+LABEL org.opencontainers.image.authors="Divanshu Chauhan <divkix@divkix.me>"
 LABEL org.opencontainers.image.url="https://divkix.me"
 LABEL org.opencontainers.image.source="https://github.com/Divkix/docker-python-base"
 LABEL org.opencontainers.image.title="docker-python-base"
