@@ -6,7 +6,6 @@ COPY tools/docker/setup /tmp/setup
 RUN apt-get update \
     && apt-get upgrade --yes \
     && apt-get install --no-install-suggests --no-install-recommends --yes \
-    poppler-utils \
     apt-utils \
     build-essential \
     libpq-dev \
@@ -25,7 +24,7 @@ RUN apt-get update \
     apt-transport-https \
     ca-certificates \
     gnupg \
-    && pip install --no-cache-dir --upgrade pip setuptools wheel poetry \
+    && pip install --no-cache-dir --upgrade poetry \
     && poetry config virtualenvs.create false \
     && apt-get clean \
     && apt-get autoremove --purge --yes \
