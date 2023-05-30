@@ -25,7 +25,7 @@ RUN apt-get update \
     ca-certificates \
     gnupg \
     && pip install --no-cache-dir --upgrade poetry \
-    && poetry config virtualenvs.create false \
+    && poetry config virtualenvs.in-project true \
     && apt-get clean \
     && apt-get autoremove --purge --yes \
     && /tmp/setup/ffmpeg-setup.sh \
